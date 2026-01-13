@@ -1,10 +1,16 @@
 //tools
 const {Router}= require('express');
 //controllers
-const {getHome} = require('../controllers/indexController.js')
+const userController = require('../controllers/indexController.js')
 
-const indexRouter =Router();
+const userRouter =Router();
+
 //get
-indexRouter.get('/',getHome)
+userRouter.get('/',userController.userListGet);
+userRouter.get('/create', userController.userCreateGet)
 
-module.exports = indexRouter
+//post
+userRouter.post('/create',userController.userCreatePost);
+
+
+module.exports = userRouter
