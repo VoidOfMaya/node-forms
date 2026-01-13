@@ -1,16 +1,18 @@
 //tools
 const {Router}= require('express');
 //controllers
-const userController = require('../controllers/indexController.js')
+const usersController = require('../controllers/indexController.js')
 
 const userRouter =Router();
 
-//get
-userRouter.get('/',userController.userListGet);
-userRouter.get('/create', userController.userCreateGet)
+userRouter.get("/", usersController.usersListGet);
+userRouter.get("/create", usersController.usersCreateGet);
+userRouter.post("/create", usersController.usersCreatePost);
 
-//post
-userRouter.post('/create',userController.userCreatePost);
+userRouter.get("/:id/update", usersController.usersUpdateGet);
+userRouter.post("/:id/update", usersController.usersUpdatePost);
+
+userRouter.post("/:id/delete", usersController.usersDeletePost);
 
 
 module.exports = userRouter
