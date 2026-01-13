@@ -4,14 +4,46 @@
   <title><%= title %></title>
 </head>
 <body>
+  <style>
+    form{
+      display: grid;
+      grid-template:repeat(6, 1fr)/ 1fr ;
+    }
+    div{
+      display: grid;
+      grid-template: 1fr /1fr 1fr;
+    }
+  </style>
   <h1><%= title %></h1>
   <%- include("partials/errors.ejs") %>
   <form action="/create" method="POST">
-    <label for="firstName">First Name: </label>
-    <input type="text" name="firstName" id="firstName" required>
-    <label for="lastName">Last Name: </label>
-    <input type="text" name="lastName" id="lastName" required>
+
+    <div>
+      <label for="firstName">First Name: </label>
+      <input type="text" name="firstName" id="firstName" required>      
+    </div>
+
+    <div>
+      <label for="lastName">Last Name: </label>
+      <input type="text" name="lastName" id="lastName" required>      
+    </div>
+
+    <div>
+      <label for="email">email:</label>
+      <input name="email" id="email" type="email" required>      
+    </div>
+
+    <div>
+      <label for="age">Age:</label>
+      <input name="age" id="age" type="number" min="18" max="120" required>      
+    </div>
+
+    <div>
+      <label for="bio">Bio:</label>
+      <textarea name="bio" id="bio" maxlength="200"></textarea>      
+    </div>
     <button type="submit">Submit</button>
+
   </form>
   <a href="/">Back to home</a>
 </body>

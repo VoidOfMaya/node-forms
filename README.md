@@ -18,9 +18,9 @@ MVC folder structure that includes
 
 #### assignment goals:
     * Expand the User modelImplement the following fields and validations to your model:
-        - Email (required, must be formatted properly)
-        - Age (optional, must be a number between 18 and 120)
-        - Bio (optional, maximum 200 characters)
+        - Email (required, must be formatted properly) ✅
+        - Age (optional, must be a number between 18 and 120) ✅
+        - Bio (optional, maximum 200 characters) ✅
     * Implement searching:
         - Add a form with a GET method (in createUser.ejs or another view) which accepts a name or email (or both!)
         - Create a new route /search which accepts a GET request.
