@@ -7,20 +7,31 @@
 </head>
 <body>
     <h1><%= title %></h1>
-    <form action="/search" method="get">
+    <form action="/search" method="GET">
         <label for="name">Find by name: </label><input name="name", id="name">
         <labe for="email"> Find by email: </labe><input name="email" id="email">
-        <button type="submit">search!</button>
+        <button type="submit" id="search-btn">search!</button>
     </form>
     <button><a href="/">Return to main page</a></button>
 
     <div>
-        <%if (name || email){%>
-            <div>looking for: <%= name %>, email: <%= email %></div>
-        <%}%>
+        Users found:
+        <% console.log(user); %>
+        <% if (user){ %>
+            ID: <%= user.id %>, Name: <%= user.firstName %> <%= user.lastName %>,Age: <%= user.age %> 
+            Email: <%= user.email %> Bio: <%= user.bio %>
+            <a href="/<%= user.id %>/update">Update</a>
+            <form action="/<%= user.id %>/delete" method="POST" style="display:inline;">
+                <button type="submit"
+                onclick="return confirm('Are you sure you want to delete this user?');">
+                Delete
+                </button>
+            </form>
+        <% }else{ %>
+            <span>no users matching</span>
+        <% } %>
 
     </div>
-    
     
 </body>
 </html>

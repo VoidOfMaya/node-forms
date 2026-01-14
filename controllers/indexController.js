@@ -1,12 +1,15 @@
 //import data
 const usersStorage = require('../storages/userStorage.js')
 //import tools:
-const { body, validationResult, matchedData } = require("express-validator");
+const { query ,body, validationResult, matchedData } = require("express-validator");
 
 //code:
+//settup:
+usersStorage.addUser({firstName: 'david',lastName: 'hanakabi', email: 'hanaka@gmail.com', age: 18, bio: ''});
+usersStorage.addUser({firstName: 'maya',lastName: 'maza', email: 'mmm@gmail.com', age: 29, bio: ''});
+usersStorage.addUser({firstName: 'lily',lastName: 'coleburn', email: 'coleburn@gmail.com', age: 38, bio: ''});
 const alphaErr = 'must only contain letters.';
 const lengthErr = 'must be between 1 and 10 characters';
-
 const validateUser = [  //firstname
                         body("firstName").trim().isAlpha().withMessage(`First name ${alphaErr}`)
                         .isLength({ min: 1, max: 10 }).withMessage(`First name ${lengthErr}`),
@@ -81,15 +84,24 @@ exports.usersDeletePost = (req, res) => {
   res.redirect("/");
 };
 const validateSearchData = [//name
-                            body('name').trim().isAlpha().withMessage(`First name ${alphaErr}`)
-                            .isLength({ min: 1, max: 10 }).withMessage(`First name ${lengthErr}`),
+                            query('name').optional({checkFalsy: true}).isAlpha().withMessage(` name must be a striing, error : ${alphaErr}`),
                             //email
-                            body('email').trim().notEmpty().withMessage('Email is required')
-                            .isEmail().withMessage('must be a valid email'),
+                            query('email').optional({checkFalsy: true}).isEmail().withMessage('email must be valid')
 ];
 exports.usersFindGet = [validateSearchData ,(req, res) =>{
+    //validating  input data
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("search", {
+        title: "find user",
+        errors: errors.array(),
+      });
+    }
+    //console.log(usersStorage.getUsers());
+    const {name, email} = matchedData(req)
+    console.log(`from controllers: looking for \nname: ${name} \nmail${email}`)
+   
+    res.render('search',{title: "Find user:", user: usersStorage.getByNameOREmail(name, email),})
+    
 
-    const {name, email} = req.query;
-
-    res.render('search',{title: "search users:", name: name, email: email,})
 }];

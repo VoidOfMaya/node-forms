@@ -17,7 +17,19 @@ class UsersStorage {
   getUser(id) {
     return this.storage[id];
   }
+  getByNameOREmail(name, email){
+    const users = Object.values(this.storage)
+    let userFound = null
 
+    users.forEach(user => {
+      if(name && user.firstName.toLowerCase() === name.toLowerCase() || 
+         email && user.email.toLowerCase() === email.toLowerCase()){
+
+        userFound = user
+      }
+    });
+    return userFound;
+  }
   updateUser(id, { firstName, lastName, email, age, bio }) {
     this.storage[id] = { id, firstName, lastName, email, age, bio };
   }
