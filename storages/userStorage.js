@@ -22,11 +22,19 @@ class UsersStorage {
     let userFound = null
 
     users.forEach(user => {
-      if(name && user.firstName.toLowerCase() === name.toLowerCase() || 
-         email && user.email.toLowerCase() === email.toLowerCase()){
+      
+      if(name){
+        if(user.firstName.toLowerCase() === name.toLowerCase()){
+          
+        userFound = user;
+        };
+      };
+      if(email){
+        if(user.email.toLowerCase() === email.toLowerCase()){
+          userFound =user;
+        };
+      };
 
-        userFound = user
-      }
     });
     return userFound;
   }
