@@ -8,9 +8,19 @@
 <body>
     <h1><%= title %></h1>
     <form action="/search" method="get">
-        <label>Find by name: </label><input>
-        <labe> Find by email: </labe><input>
+        <label for="name">Find by name: </label><input name="name", id="name">
+        <labe for="email"> Find by email: </labe><input name="email" id="email">
+        <button type="submit">search!</button>
     </form>
+    <button><a href="/">Return to main page</a></button>
+
+    <div>
+        <%if (name || email){%>
+            <div>looking for: <%= name %>, email: <%= email %></div>
+        <%}%>
+
+    </div>
+    
     
 </body>
 </html>

@@ -7,19 +7,20 @@ const { body, validationResult, matchedData } = require("express-validator");
 const alphaErr = 'must only contain letters.';
 const lengthErr = 'must be between 1 and 10 characters';
 
-const validateUser = [
-  body("firstName").trim()
-    .isAlpha().withMessage(`First name ${alphaErr}`)
-    .isLength({ min: 1, max: 10 }).withMessage(`First name ${lengthErr}`),
-  
-  body("lastName").trim()
-    .isAlpha().withMessage(`Last name ${alphaErr}`)
-    .isLength({ min: 1, max: 10 }).withMessage(`Last name ${lengthErr}`),
-  body('email').trim().notEmpty().withMessage('Email is required')
-  .isEmail().withMessage('must be a valid email'),
-  body('age').trim().notEmpty().isNumeric().withMessage('age is required,must be a number')
-  .isInt({min: 18, max: 120}).withMessage('age out of range'),
-  body('bio').trim().isLength({max: 200}).withMessage('bio must be shorter then 200 charachters'),
+const validateUser = [  //firstname
+                        body("firstName").trim().isAlpha().withMessage(`First name ${alphaErr}`)
+                        .isLength({ min: 1, max: 10 }).withMessage(`First name ${lengthErr}`),
+                        //lastname
+                        body("lastName").trim().isAlpha().withMessage(`Last name ${alphaErr}`)
+                        .isLength({ min: 1, max: 10 }).withMessage(`Last name ${lengthErr}`),
+                        //email
+                        body('email').trim().notEmpty().withMessage('Email is required')
+                        .isEmail().withMessage('must be a valid email'),
+                        //age
+                        body('age').trim().notEmpty().isNumeric().withMessage('age is required,must be a number')
+                        .isInt({min: 18, max: 120}).withMessage('age out of range'),
+                        //bio
+                        body('bio').trim().isLength({max: 200}).withMessage('bio must be shorter then 200 charachters'),
 ];
 
 exports.usersListGet = (req, res) => {
@@ -79,7 +80,16 @@ exports.usersDeletePost = (req, res) => {
   usersStorage.deleteUser(req.params.id);
   res.redirect("/");
 };
+const validateSearchData = [//name
+                            body('name').trim().isAlpha().withMessage(`First name ${alphaErr}`)
+                            .isLength({ min: 1, max: 10 }).withMessage(`First name ${lengthErr}`),
+                            //email
+                            body('email').trim().notEmpty().withMessage('Email is required')
+                            .isEmail().withMessage('must be a valid email'),
+];
+exports.usersFindGet = [validateSearchData ,(req, res) =>{
 
-exports.usersFindGet = (req, res) =>{
-    
-}
+    const {name, email} = req.query;
+
+    res.render('search',{title: "search users:", name: name, email: email,})
+}];
